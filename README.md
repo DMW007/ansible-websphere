@@ -1,6 +1,9 @@
 # README
 A set of Ansible modules that lets you manage IBM packages and WebSphere resources
 
+## Motivation of this fork
+Unfortunately, the [original repository](https://github.com/amimof/ansible-websphere) hasn't been maintenanced for years. I'm using this module to automatically deploy HCL Connections and found some bugs. This project should fix them, so that it can be used to deploy CNX. It's also ported to Python 3, where the original one [only runs on 2 without modifications](https://github.com/amimof/ansible-websphere/issues/17). 
+
 ## Getting started
 
 Copy the folder `library` in this repo to your playbook directory or to [`ANSIBLE_LIBRARY`](http://docs.ansible.com/ansible/latest/intro_configuration.html#library)
