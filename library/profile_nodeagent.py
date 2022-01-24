@@ -94,7 +94,8 @@ def isProvisioned(dest, profileName):
             stderr=subprocess.PIPE
         )
         stdout_value, stderr_value = child.communicate()
-
+        stdout_value = stdout_value.decode()
+        stderr_value = stderr_value.decode()
         if profileName in stdout_value:
             return True
     return False
@@ -159,6 +160,8 @@ def main():
                 stderr=subprocess.PIPE
             )
             stdout_value, stderr_value = child.communicate()
+            stdout_value = stdout_value.decode()
+            stderr_value = stderr_value.decode()
             if child.returncode != 0:
                 # Remove profile dir if creation fails so that it doesnt prevents us from retrying
                 shutil.rmtree("{0}/profiles/{1}".format(wasdir, name), ignore_errors=False, onerror=None)
@@ -182,6 +185,8 @@ def main():
                     stderr=subprocess.PIPE
                 )
                 stdout_value, stderr_value = child.communicate()
+                stdout_value = stdout_value.decode()
+                stderr_value = stderr_value.decode()
                 if child.returncode != 0:
                     module.fail_json(
                         msg="Profile {0} federation failed".format(name),
@@ -220,6 +225,8 @@ def main():
             )
 
             stdout_value, stderr_value = child.communicate()
+            stdout_value = stdout_value.decode()
+            stderr_value = stderr_value.decode()
             if child.returncode != 0:
                 # manageprofiles.sh -delete will fail if the profile does not exist.
                 # But creation of a profile with the same name will also fail if

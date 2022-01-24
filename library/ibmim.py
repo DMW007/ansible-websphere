@@ -181,11 +181,13 @@ class InstallationManager():
 		)
 
 		stdout_value, stderr_value = child.communicate()
+		# We get a bytes object as stdout. Since Python3, it must be explicitely decoded to a string, so we can use operatins like split() on it.
+		stdout_value = stdout_value.decode()
+		stderr_value = stderr_value.decode()
 			
 		# Store stdout and stderr
 		self.module_facts["stdout"] = stdout_value
 		self.module_facts["stderr"] = stderr_value
-
 		if child.returncode != 0:
 			self.module.fail_json(
 				msg="Error getting installed version of package '{0}'".format(packageId),
@@ -246,6 +248,9 @@ class InstallationManager():
 		)
 
 		stdout_value, stderr_value = child.communicate()
+		stdout_value = stdout_value.decode()
+		stderr_value = stderr_value.decode()
+
 		if child.returncode != 0:
 			self.module.fail_json(
 				msg="Failed installing package '{0}'".format(module_params['id']),
@@ -285,6 +290,8 @@ class InstallationManager():
 			stderr=subprocess.PIPE
 		)
 		stdout_value, stderr_value = child.communicate()
+		stdout_value = stdout_value.decode()
+		stderr_value = stderr_value.decode()
 		if child.returncode != 0:
 			self.module.fail_json(msg="Failed uninstalling package '{0}'".format(module_params['id']))
 
@@ -323,7 +330,8 @@ class InstallationManager():
 			stderr=subprocess.PIPE
 		)
 		stdout_value, stderr_value = child.communicate()
-		
+		stdout_value = stdout_value.decode()
+		stderr_value = stderr_value.decode()
 		if child.returncode != 0:
 			self.module.fail_json(msg="Failed updating packages", stdout=stdout_value, stderr=stderr_value)		
 

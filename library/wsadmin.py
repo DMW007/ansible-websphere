@@ -34,6 +34,8 @@ def main():
     if state == 'stopped':
         child = subprocess.Popen([wasdir+"/bin/wsadmin.sh -lang jython -conntype SOAP -host "+host+" -port "+port+" -username " + username + " -password " + password " -f "+script+" "+params], shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         stdout_value, stderr_value = child.communicate()
+        stdout_value = stdout_value.decode()
+        stderr_value = stderr_value.decode()
         if child.returncode != 0:
             module.fail_json(msg="Failed executing wsadmin script: " + ¨script, stdout=stdout_value, stderr=stderr_value)
 
